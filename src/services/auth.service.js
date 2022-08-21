@@ -89,6 +89,10 @@ const validateToken = function (req, res, next) {
     });
 };
 
+const count = async (criteria = {}) => {
+  return await User.find(criteria).countDocuments();
+};
+
 
 const getUsers = async (criteria = {}, options = {}) => {
     const { sort = { createdAt: -1 }, limit } = options
@@ -105,5 +109,6 @@ module.exports= {
     getUserByEmail,
     getUserById,
     getUsers,
-    validateToken
+    validateToken,
+    count
 }

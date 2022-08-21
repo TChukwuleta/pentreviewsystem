@@ -3,12 +3,24 @@ const validate = require("../helpers/validate")
 const reviewController = require("../controllers/review.controller")
 const reviewPolicy = require("../policies/review.policy")
 const { authService } = require("../services")
+const upload = require('multer')();
 const router = express.Router()
 
 router.post(
     "/create", 
-    [authService.validateToken, validate(reviewPolicy.create)],
+    [
+        validate(reviewPolicy.create),
+        authService.validateToken, 
+    ],
     reviewController.createReview
+)
+
+router.post(
+    "/viewersremark", 
+    [
+        validate(reviewPolicy.viewerRemark)
+    ],
+    reviewController.addViewerRemark
 )
 
 router.get(
@@ -18,7 +30,7 @@ router.get(
 
 router.get(
     "/getreviews",
-    reviewController.getAllReviews
+    reviewController.getReviews
 )
 
 router.get(

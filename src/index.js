@@ -3,9 +3,11 @@ const app = express()
 const logger = require("./helpers/logger")
 require("dotenv").config()
 const port = process.env.PORT
+const fileUpload = require("express-fileupload")
 require("./config/mongoose")
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
+app.use(fileUpload())
 
 // Home page
 app.get("/", (req, res) => {
@@ -14,7 +16,7 @@ app.get("/", (req, res) => {
     })
 })
 
-// Routes
+// Routes 
 app.use("/api", require("./routes/index"))
 
 // Other routes

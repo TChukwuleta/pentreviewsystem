@@ -44,16 +44,16 @@ const generateAuthTokens = async (user, newUser = false) => {
     };
   
     if (newUser) {
-      const emailVerificationToken = generateToken(user, emailTokenExpires);
+      const emailVerificationToken = generateToken(user, accessTokenExpires);
       await saveToken(
         emailVerificationToken,
         user._id,
-        emailTokenExpires,
+        accessTokenExpires,
         "emailToken"
       );
       returnTokens.emailToken = {
         token: emailVerificationToken,
-        expires: emailTokenExpires.toDate(),
+        expires: accessTokenExpires.toDate(),
       };
     }
     return returnTokens;

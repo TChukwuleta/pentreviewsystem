@@ -27,8 +27,8 @@ const create = {
         "string.empty": `rating cannot be an empty field`,
         "any.required": `rating is a required field`,
       })
-    }),
-};
+    }).unknown()
+}; 
 
 const viewerRemark = {
     body: Joi.object().keys({

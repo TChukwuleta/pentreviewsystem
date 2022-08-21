@@ -1,27 +1,31 @@
-const { User, Review, ReviewRating } = require("../models")
+const { Review, ReviewRating } = require("../models")
 const ApiError = require("../helpers/ApiError")
-const { authService } = require('./index');
 const cloudinary = require("../helpers/cloudinary");
 
-const createReview = async (req, res, data, mediaType) => {
+const createReview = async (req, data) => {
     try {
+        const { mediaType } = req.body
         let mediaReview;
-        switch(mediaType) {
-            case "audio":
-                const audioResult = await cloudinary.uploadAudio(req, res)
-                mediaReview = audioResult.secure_url
-              break;
-            case "image":
-                if (req.files && req.files.image) {
-                    mediaReview = await processImages(req);
-                }
-                break;
-            case "video":
-                const videoResult = await cloudinary.uploadVideo(req, res)
-                mediaReview = videoResult.secure_url
-              break;
-            default:
-              throw new ApiError(400, "Invalid media type selected")
+        if(req.files){
+            switch(mediaType) {
+                case "audio":
+                    if (req.files && req.files.audio) {
+                        mediaReview = await processAudio(req);
+                    }
+                  break;
+                case "image":
+                    if (req.files && req.files.image) {
+                        mediaReview = await processImages(req);
+                    }
+                    break;
+                case "video":
+                    if (req.files && req.files.video) {
+                        mediaReview = await processVideo(req);
+                    }
+                  break;
+                default:
+                  throw new ApiError(400, "Invalid media type selected. Media type can be: 'audio', 'image', 'video'")
+            }
         }
         const reviewData = { ...data, mediaReview }  
         let review = await Review.create(reviewData)
@@ -32,9 +36,17 @@ const createReview = async (req, res, data, mediaType) => {
 }
 
 const processImages = async (req) => {
-    console.log(req.files)
     const result = await cloudinary.uploadImage(req.files.image)
-    console.log(result)
+    return result.secure_url
+}
+
+const processAudio = async (req) => {
+    const result = await cloudinary.uploadAudio(req.files.audio)
+    return result.secure_url
+}
+
+const processVideo = async (req) => {
+    const result = await cloudinary.uploadVideo(req.files.video)
     return result.secure_url
 }
 
@@ -62,28 +74,21 @@ const getOneReview = async (criteria) => {
 
 const visitorReview = async (body) => {
     try {
-        const { reviewId, visitorResponse } = body
+        const { reviewId, isHelpful } = body
         const existingReview = await Review.findOne({ _id: reviewId })
         if(!existingReview){
             throw new ApiError(400, "Review does not exist")
         }
-
-        const visitorReview = await ReviewRating.create({
-            isReviewHelpful: visitorResponse,
-            review: existingReview._id
-        })
-        let data;
-        switch (key) {
+        switch (isHelpful) {
             case true:
-                data.helpfulCount = existingReview.helpfulCount + 1
+                existingReview.helpfulCount = existingReview.helpfulCount + 1
                 break;
             case false:
-                data.helpfulCount = existingReview.notHelpfulCount + 1
+                existingReview.notHelpfulCount = existingReview.notHelpfulCount + 1
                 break;
             default:
                 throw new ApiError(400, "Invalid review response")
         }
-        Object.assign(existingReview, data);
         await existingReview.save()
 
         const response = { visitorReview, existingReview }
@@ -95,12 +100,12 @@ const visitorReview = async (body) => {
 
 const getReviews = async (criteria = {}, options = {}) => {
     try {
-        const { sort = { createdAt: -1 }, limit } = options;
+        const { sort, limit } = options;
         const _limit = parseInt(limit, 10);
         let reviews = await Review.find(criteria)
         .sort(sort)
         .limit(_limit)
-        .populate("User", "firstName lastName")
+        .populate("user", "firstName lastName")
         if(!reviews){
             throw new ApiError(400, "No Reviews available")
         }

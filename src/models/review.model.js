@@ -36,10 +36,12 @@ const reviewSchema = mongoose.Schema({
         required: true,
     },
     helpfulCount: {
-        type: Number
+        type: Number,
+        default: 0
     },
     notHelpfulCount: {
-        type: Number
+        type: Number,
+        default: 0
     },
     createdAt: {
         type: String,

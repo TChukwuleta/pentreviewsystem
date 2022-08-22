@@ -78,7 +78,7 @@ const uploadVideo = async function (video) {
 
 const uploadImage = async function (image) {
     try {
-      const featureImagePath = path.resolve(`./uploads/${image.name}`);
+      const featureImagePath = path.resolve(`./app/uploads/${image.name}`);
       await image.mv(featureImagePath);
       return new Promise((resolve, reject) => {
         cloudinary.uploader

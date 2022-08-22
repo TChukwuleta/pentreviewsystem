@@ -56,7 +56,8 @@ Bingo! This application is accessible at the desired port.
 
 
 Live link: https://pentreviewsystem.herokuapp.com/
-Go to :
+Go to : 
+https://documenter.getpostman.com/view/17832863/VUqpudL9
 
 To see how the different application endpoints are implemented.
 

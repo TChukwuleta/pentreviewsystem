@@ -40,6 +40,7 @@ Bingo! This application is accessible at the desired port.
 
 ### Available Routes
 
+```
 /api/user/register - Register a user on the platform
 /api/user/login - User login
 /api/user/getall - Gets all user available on the platform
@@ -50,6 +51,7 @@ Bingo! This application is accessible at the desired port.
 /api/review/getreviews?limit=2 - Users/viewers can get latest reviews
 /api/review/viewersremark - Viewers can mark a review as helpful
 /api/review/getreviews?helpful=true&limit=1 - Users/Viewers can get reviews based on'Marked as Helpful'
+```
 
 
 

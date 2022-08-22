@@ -39,7 +39,7 @@ const login = catchAsync(async(req, res) => {
         const errorCode = error.code || 500
         const errorMessage = error.message || error
         res.status(errorCode).send({
-            message: `User registration failed. ${errorMessage}`,
+            message: `User login failed. ${errorMessage}`,
         })
     }
 })
@@ -66,7 +66,7 @@ const getUser = catchAsync(async (req, res) => {
         const errorCode = error.code || 500
         const errorMessage = error.message || error
         res.status(errorCode).send({
-            message: `User registration failed. ${errorMessage}`,
+            message: `Fetching user failed. ${errorMessage}`,
         })
     }
 })
@@ -88,7 +88,7 @@ const getUsers = catchAsync(async (req, res) => {
         const errorCode = error.code || 500
         const errorMessage = error.message || error
         res.status(errorCode).send({
-            message: `User registration failed. ${errorMessage}`,
+            message: `Fetching all users failed. ${errorMessage}`,
         })
     }
 })

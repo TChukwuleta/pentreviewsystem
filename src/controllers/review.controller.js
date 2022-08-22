@@ -19,7 +19,11 @@ const createReview = catchAsync(async (req, res) => {
             } 
         }) 
     } catch (error) {
-        throw new ApiError(error.code || 500, error.message || error);   
+        const errorCode = error.code || 500
+        const errorMessage = error.message || error
+        res.status(errorCode).send({
+            message: `Review creation failed. ${errorMessage}`,
+        })  
     }
 })
 
@@ -33,7 +37,11 @@ const addViewerRemark = catchAsync(async (req, res) => {
             } 
         }) 
     } catch (error) {
-        throw new ApiError(error.code || 500, error.message || error);  
+        const errorCode = error.code || 500
+        const errorMessage = error.message || error
+        res.status(errorCode).send({
+            message: `Adding viewer's remark failed. ${errorMessage}`,
+        }) 
     }
 })
 
@@ -49,7 +57,11 @@ const getSingleReview = catchAsync(async (req, res) => {
             }
         })
     } catch (error) {
-        throw new ApiError(error.code || 500, error.message || error);      
+        const errorCode = error.code || 500
+        const errorMessage = error.message || error
+        res.status(errorCode).send({
+            message: `Fetching single review failed. ${errorMessage}`,
+        })       
     }
 })
 
@@ -70,7 +82,11 @@ const getReviews = catchAsync(async (req, res) => {
             }
         })
     } catch (error) {
-        throw new ApiError(error.code || 500, error.message || error);
+        const errorCode = error.code || 500
+        const errorMessage = error.message || error
+        res.status(errorCode).send({
+            message: `Fetching reviews failed. ${errorMessage}`,
+        }) 
     }
 })
 
@@ -84,7 +100,11 @@ const getAllReviews = catchAsync(async (req, res) => {
             }
         })
     } catch (error) {
-        throw new ApiError(error.code || 500, error.message || error); 
+        const errorCode = error.code || 500
+        const errorMessage = error.message || error
+        res.status(errorCode).send({
+            message: `Getting all reviews failed. ${errorMessage}`,
+        })  
     }
 })
 

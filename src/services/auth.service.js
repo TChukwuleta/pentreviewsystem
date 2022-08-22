@@ -81,7 +81,12 @@ const validateToken = function (req, res, next) {
     req.token = token;
     jwt.verify(req.token, process.env.JWT_SECRET_KEY, (err, authData) => {
       if (err) {
-        throw new ApiError(400, err.toString());
+        const errorCode = err.code || 500
+        const errorMessage = err.message || error
+        return res.status(errorCode).send({
+            message: `${errorMessage}`,
+        })
+        //throw new ApiError(400, err.toString());
       } else {
         req.user = authData.user; // Add User Id to request
         next();

@@ -13,7 +13,6 @@ cloudinary.config({
 
 const uploadAudio = async function (audio) {
   try {
-    console.log(audio)
     const featureImagePath = path.resolve(`./uploads/${audio.name}`);
     await audio.mv(featureImagePath);
     console.log(featureImagePath)

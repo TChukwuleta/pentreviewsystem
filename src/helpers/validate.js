@@ -11,10 +11,14 @@ const validate = (schema) => (req, res, next) => {
     .validate(object);
 
   if (error) {
+    const errorCode = error.code || 500
     const errorMessage = error.details
       .map((details) => details.message)
       .join(", ");
-    return next(new ApiError(400, errorMessage));
+      return res.status(errorCode).send({
+        message: `${errorMessage}`,
+    })
+    //return next(new ApiError(400, errorMessage));
   }
   Object.assign(req, value);
   return next();

@@ -10,7 +10,6 @@ const createReview = catchAsync(async (req, res) => {
             ...req.body,
             user: req.user._id
         }
-        console.log(reviewBody)
         var review = await reviewService.createReview(req, reviewBody)
         res.status(201).send({
             message: "Review created successfully",

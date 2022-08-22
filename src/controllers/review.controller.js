@@ -1,6 +1,5 @@
 const ApiError = require("../helpers/ApiError");
 const catchAsync = require("../helpers/catchAsync")
-const cloudinary = require("../helpers/cloudinary")
 const pick = require("../helpers/pick")
 const { authService, reviewService } = require("../services")
 
@@ -59,10 +58,8 @@ const getReviews = catchAsync(async (req, res) => {
         const query = pick(req.query, ["helpful", "limit"])
         let filter = {};
         let options = { sort: { createdAt: -1 }, limit: query.limit }
-        if(query.helpful == true){
-            //filter = { helpfulCount: -1 }
-            filter = { helpfulCount: 'desc' }
-            options = { sort: { createdAt: -1 }, limit: query.limit }
+        if(query.helpful){
+            options = { sort: { helpfulCount: -1 }, limit: query.limit }
         }
         
         const reviews = await reviewService.getReviews(filter, options)

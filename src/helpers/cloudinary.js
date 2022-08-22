@@ -45,7 +45,7 @@ const uploadVideo = async function (video) {
       cloudinary.uploader
         .upload(featureImagePath, {
           resource_type: "video",
-          chunk_size: 6000000,
+          chunk_size: 8000000,
           eager: [
             {
               width: 300,

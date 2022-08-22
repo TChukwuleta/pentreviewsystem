@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken")
 const moment = require("moment")
 
-const { Token, User } = require("../models")
+const { Token } = require("../models")
 const ApiError = require("../helpers/ApiError");
 
 

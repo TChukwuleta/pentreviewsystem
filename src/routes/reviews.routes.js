@@ -3,7 +3,6 @@ const validate = require("../helpers/validate")
 const reviewController = require("../controllers/review.controller")
 const reviewPolicy = require("../policies/review.policy")
 const { authService } = require("../services")
-const upload = require('multer')();
 const router = express.Router()
 
 router.post(

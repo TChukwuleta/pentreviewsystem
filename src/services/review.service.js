@@ -1,4 +1,4 @@
-const { Review, ReviewRating } = require("../models")
+const { Review } = require("../models")
 const ApiError = require("../helpers/ApiError")
 const cloudinary = require("../helpers/cloudinary");
 

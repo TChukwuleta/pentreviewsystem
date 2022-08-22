@@ -45,7 +45,7 @@ const uploadVideo = async function (video) {
       cloudinary.uploader
         .upload(featureImagePath, {
           resource_type: "video",
-          chunk_size: 8000000,
+          chunk_size: 6000000,
           eager: [
             {
               width: 300,
@@ -78,10 +78,10 @@ const uploadVideo = async function (video) {
 
 const uploadImage = async function (image) {
     try {
-      const featureImagePath = path.resolve(__dirname, `uploads/${image.name}`);
+      const featureImagePath = path.resolve(`./uploads/${image.name}`);
       await image.mv(featureImagePath);
       return new Promise((resolve, reject) => {
-        cloudinary.uploader 
+        cloudinary.uploader
           .upload(featureImagePath)
           .then((result) => {
             fs.unlinkSync(featureImagePath);
